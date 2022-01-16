@@ -52,7 +52,7 @@ def book(competition, club):
         return render_template('booking.html', club=found_club, competition=found_competition)
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
 
 
 @app.route('/purchasePlaces', methods=['POST'])
@@ -62,19 +62,20 @@ def purchase_places():
     places_required = int(request.form['places'])
     if is_competition_date_wrong(competition['date']):
         flash("Past competition, you can't do that")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     if places_required > int(competition['numberOfPlaces']):
         flash("Not enough places to book")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     elif places_required < 0:
         flash("You can't use negative numbers")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     elif places_required > 12:
         flash("You can't book more than 12 places")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
+    club['points'] = int(club['points']) - places_required
     flash('Great-booking complete!')
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
 
 
 # TODO: Add route for points display
