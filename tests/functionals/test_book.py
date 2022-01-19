@@ -1,7 +1,12 @@
 import unittest
+from unittest.mock import patch
+
+import server
+from tests.functionals.test_purchase import fake_competitions
 from tests.units.test_base import BasicTests
 
 
+@patch('server.competitions', fake_competitions)
 class TestBook(BasicTests):
     def test_book(self):
         response = self.app.get("/book/Test%20Classic/She%20Lifts", follow_redirects=True)

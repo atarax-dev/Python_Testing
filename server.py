@@ -63,8 +63,8 @@ def purchase_places():
     if is_competition_date_wrong(competition['date']):
         flash("Past competition, please select another one")
         return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
-    if places_required > int(competition['numberOfPlaces']):
-        flash("Not enough places to book")
+    if places_required > int(competition['numberOfPlaces']) or places_required > int(club['points']):
+        flash("Not enough places or points to book")
         return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     elif places_required < 0:
         flash("Please use positive numbers")

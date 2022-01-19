@@ -1,4 +1,6 @@
 import unittest
+from unittest.mock import patch
+
 from tests.units.test_base import BasicTests
 from server import load_clubs, load_competitions, is_competition_date_wrong
 
@@ -25,17 +27,15 @@ class TestMain(BasicTests):
 
     def test_load_competitions(self):
         competitions = load_competitions()
-        self.assertTrue(len(competitions) == 4)
+        self.assertTrue(len(competitions) == 2)
 
         comp1 = "Spring Festival"
         comp2 = "Fall Classic"
-        comp3 = "Test Classic"
-        comp4 = "Fake Classic"
+        comp3 = "Fake Classic"
 
         self.assertTrue(comp1 in [comp["name"] for comp in competitions])
         self.assertTrue(comp2 in [comp["name"] for comp in competitions])
-        self.assertTrue(comp3 in [comp["name"] for comp in competitions])
-        self.assertFalse(comp4 in [comp["name"] for comp in competitions])
+        self.assertFalse(comp3 in [comp["name"] for comp in competitions])
 
     def test_validate_competition_date(self):
         date = '2020-03-27 10:00:00'

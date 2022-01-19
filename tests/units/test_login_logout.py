@@ -1,6 +1,7 @@
 import unittest
 from tests.units.test_base import BasicTests
 
+
 class TestLoginLogout(BasicTests):
     def test_route_email_ok(self):
         response = self.login("john@simplylift.co")
