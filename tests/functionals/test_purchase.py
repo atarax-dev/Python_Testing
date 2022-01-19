@@ -25,6 +25,23 @@ fake_competitions = [
     }
 ]
 
+fake_clubs = [
+    {
+        "name": "Simply Lift",
+        "email": "john@simplylift.co",
+        "points": "72"
+    },
+    {
+        "name": "Iron Temple",
+        "email": "admin@irontemple.com",
+        "points": "4"
+    },
+    {"name": "She Lifts",
+     "email": "kate@shelifts.co.uk",
+     "points": "45"
+     }
+]
+
 
 class TestPurchase(BasicTests):
     @patch('server.competitions', fake_competitions)
@@ -35,7 +52,7 @@ class TestPurchase(BasicTests):
 
         self.assertEqual(response.status_code, 200)
         self.assertTrue(b"Great-booking complete!" in response.data)
-        self.assertTrue(b"Points available: 10" in response.data)
+        self.assertTrue(b"Points available: 6" in response.data)
         self.assertTrue(b"Number of Places: 7798" in response.data)
 
     def test_purchase_on_past_competitions(self):
@@ -69,6 +86,7 @@ class TestPurchase(BasicTests):
         self.assertTrue(b"Please use positive numbers" in response.data)
 
     @patch('server.competitions', fake_competitions)
+    @patch('server.clubs', fake_clubs)
     def test_purchase_more_than_12_places(self):
         response = self.app.post(
             "/purchasePlaces", data=dict(competition="Test Classic", club="Simply Lift", places=13),

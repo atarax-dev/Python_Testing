@@ -1,4 +1,6 @@
 import json
+from math import floor
+
 from flask import Flask, render_template, request, redirect, flash, url_for
 from datetime import datetime
 
@@ -63,7 +65,7 @@ def purchase_places():
     if is_competition_date_wrong(competition['date']):
         flash("Past competition, please select another one")
         return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
-    if places_required > int(competition['numberOfPlaces']) or places_required > int(club['points']):
+    if places_required > int(competition['numberOfPlaces']) or 3*places_required > int(club['points']):
         flash("Not enough places or points to book")
         return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     elif places_required < 0:
@@ -73,7 +75,7 @@ def purchase_places():
         flash("Please book 12 places or less")
         return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
-    club['points'] = int(club['points']) - places_required
+    club['points'] = int(club['points']) - 3*places_required
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions, utc_dt=str(datetime.today()))
 

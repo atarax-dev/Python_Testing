@@ -1,13 +1,14 @@
 import unittest
 from unittest.mock import patch, Mock
 
-from tests.functionals.test_purchase import fake_competitions
+from tests.functionals.test_purchase import fake_competitions, fake_clubs
 from tests.units.test_base import BasicTests
 from server import load_clubs, load_competitions
 
 
 class TestUserScenario(BasicTests):
 
+    @patch('server.clubs', fake_clubs)
     @patch('server.competitions', fake_competitions)
     def test_scenario(self):
         clubs = load_clubs()
@@ -21,12 +22,13 @@ class TestUserScenario(BasicTests):
         response = self.app.get("/book/TestMonkey%20Classic/She%20Lifts", follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         purchase_response = self.app.post(
-            "/purchasePlaces", data=dict(competition="TestMonkey Classic", club="She Lifts", places=2), follow_redirects=True
+            "/purchasePlaces", data=dict(competition="TestMonkey Classic", club="She Lifts", places=2),
+            follow_redirects=True
         )
 
         self.assertEqual(purchase_response.status_code, 200)
         self.assertTrue(b"Great-booking complete!" in purchase_response.data)
-        self.assertTrue(b"Points available: 8" in purchase_response.data)
+        self.assertTrue(b"Points available: 39" in purchase_response.data)
         self.assertTrue(b"Number of Places: 1" in purchase_response.data)
         response = self.app.get("/logout", follow_redirects=False)
         self.assertEqual(response.status_code, 302)
