@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch
 
-import server
 from tests.functionals.test_purchase import fake_competitions
 from tests.units.test_base import BasicTests
 

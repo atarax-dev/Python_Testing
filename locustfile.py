@@ -7,7 +7,7 @@ class WebsiteUser(HttpUser):
         self.client.get("/")
 
     @task
-    def main_page(self):
+    def clubs_page(self):
         self.client.get("/clubs")
 
     @task
