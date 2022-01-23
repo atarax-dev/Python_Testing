@@ -44,6 +44,9 @@ fake_clubs = [
 
 
 class TestPurchase(BasicTests):
+    """Classe de tests sur la réservation et les possibles erreurs
+
+    """
     @patch('server.competitions', fake_competitions)
     def test_purchase_ok(self):
         response = self.app.post(

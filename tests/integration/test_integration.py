@@ -7,6 +7,10 @@ from server import load_clubs, load_competitions
 
 
 class TestUserScenario(BasicTests):
+    """Classe de test décrivant un scénario utilisateur complet
+
+    Simulation de clubs et de compétitions
+    """
 
     @patch('server.clubs', fake_clubs)
     @patch('server.competitions', fake_competitions)

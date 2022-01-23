@@ -7,6 +7,9 @@ from tests.units.test_base import BasicTests
 
 @patch('server.competitions', fake_competitions)
 class TestBook(BasicTests):
+    """Classe de tests sur l'affichage de l'écran de réservation
+
+    """
     def test_book(self):
         response = self.app.get("/book/Test%20Classic/She%20Lifts", follow_redirects=True)
         self.assertEqual(response.status_code, 200)

@@ -1,24 +1,27 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clubs List || GUDLFT</title>
 </head>
+
 <body>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-        <ul>
+    <ul>
         {% for message in messages %}
         <li>{{ message }}</li>
         {% endfor %}
-        </ul>
+    </ul>
     {% endif %}
     {% endwith %}
-    <a href="/">Back</a><hr/>
+    <a href="/">Back</a>
+    <hr />
     <h2>List of clubs</h2>
     <ul>
-    {% for club in clubs %}
+        {% for club in clubs %}
         <li> {{ club["name"] }} - {{ club["points"] }} points </li>
-    {% endfor %}
+        {% endfor %}
     </ul>
 </body>
